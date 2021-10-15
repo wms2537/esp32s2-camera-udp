@@ -60,6 +60,7 @@
 #define CAM_D9 GPIO_NUM_6
 #define CAM_SCL GPIO_NUM_3
 #define CAM_SDA GPIO_NUM_1
+#define CAM_PWR GPIO_NUM_37
 
 #define CONFIG_CAMERA_OV2640
 #define CONFIG_CAMERA_JPEG_MODE
@@ -275,7 +276,7 @@ void wifi_init_sta(void)
 
 static void cam_task(void *arg)
 {
-  if (gpio_set_level(GPIO_NUM_37, 0) != ESP_OK)
+  if (gpio_set_level(CAM_PWR, 0) != ESP_OK)
   {
     ESP_LOGI("CAM TASK", "GPIO failed to init");
   }
@@ -380,7 +381,7 @@ fail:
 
 void app_main(void)
 {
-  gpio_set_direction(GPIO_NUM_37, GPIO_MODE_OUTPUT);
+  gpio_set_direction(CAM_PWR, GPIO_MODE_OUTPUT);
   esp_err_t ret = nvs_flash_init();
   if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND)
   {
